@@ -1,13 +1,12 @@
 # Program to make a simple
 # login screen 
  
+from google_db import gsheet_find
+import bcrypt
 import tkinter as tk
 import tkinter.font as tkFont
 import tkinter.messagebox
 import pyautogui
-
-acc="ginny"
-pwd="0607"
 
 tries=3
 logged=False
@@ -38,14 +37,14 @@ passw_var=tk.StringVar()
 # get the name and password and
 # print them on the screen
 def submit(event=''):
-    global acc, pwd, tries, logged
+    global tries, logged
     
     name=name_var.get()
-    password=passw_var.get()
-    
-    print("The name is : " + name)
+    password=str.encode(passw_var.get())
 
-    if(name == acc and password == pwd):
+    pwd = gsheet_find(name)
+
+    if bcrypt.checkpw(password, bytes.fromhex(pwd)):
         tkinter.messagebox.showinfo("Alert Message", "登入成功!")
         name_var.set("")
         passw_var.set("")
@@ -91,7 +90,7 @@ name_label.grid(row=0,column=0)
 name_entry.grid(row=0,column=1)
 passw_label.grid(row=1,column=0)
 passw_entry.grid(row=1,column=1)
-sub_btn.grid(row=2,column=1)
+sub_btn.grid(row=2,column=1, pady=5)
   
 # performing an infinite loop
 # for the window to display
