@@ -1,9 +1,9 @@
 from google_db import gsheet_update
-import bcrypt
+from encryptor import *
 
-user_name = 'ej'
-passwd = b''
+user_name = 'Ginny'
+password = ''
 
-salt = bcrypt.gensalt()
-hashed = bcrypt.hashpw(passwd, salt)
-gsheet_update(user_name, hashed.hex())
+token = encrypted(password)
+
+gsheet_update(user_name, token.decode())
