@@ -109,6 +109,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*.key
+_libmaster.pyd
 
 # Spyder project settings
 .spyderproject
