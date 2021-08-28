@@ -5,9 +5,13 @@ https://code.visualstudio.com/
 https://www.python.org/downloads/release/python-396/
 3. 包含這個總共三個步驟基本環境建置，不用半小時
 https://www.youtube.com/watch?v=YoXwvgec4DI&list=PLliocbKHJNwsQ7fbMNwy20qR-SURFmhir&index=2
-4. 安裝gspread 操控Google Sheet用 + Google API 認證用的檔案
+
+*(mac pip可能要改用pip3)
+4. 安裝cryptography
+pip install cryptography
+5. 安裝gspread 操控Google Sheet用 + Google API 認證用的檔案
 pip install gspread
 pip install --upgrade google-api-python-client oauth2client
-5. 安裝PyAutoGUI (模擬滑鼠鍵盤用)
+6. 安裝PyAutoGUI (模擬滑鼠鍵盤用)
 pip install PyAutoGUI
 pip install Pillow --upgrade
