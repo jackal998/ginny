@@ -18,8 +18,8 @@ def gsheet_update(user_name,password):
 
     cell = data_sheet.find(user_name)
     next_row = next_available_row(data_sheet)
-    uname_col =  find_column(data_sheet, 'user_name')
-    pwd_col =  find_column(data_sheet, 'password')
+    uname_col = find_column(data_sheet, 'user_name') + 1
+    pwd_col =  find_column(data_sheet, 'password') + 1
 
     #insert on the next available row
     if cell == None :
