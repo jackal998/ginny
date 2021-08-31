@@ -1,34 +1,35 @@
 from encryptor import *
 import json
 
-def gsheet_find(user_name,data_title):
+def gsheet_find(user_name, data_title):
     data_sheet = get_data_sheet(set_cred())
     
     col_idx = find_column(data_sheet, data_title)
     if col_idx == None:
-        return "data_title: {} not found.".format(data_title)
+        return "data_title: {}, not found.".format(data_title)
 
     cell = data_sheet.find(user_name)
     return_value = None if cell == None else data_sheet.cell(cell.row, cell.col + col_idx).value
 
     return return_value
 
-def gsheet_update(user_name,password):
+def gsheet_update(user_name, data_title, data):
     data_sheet = get_data_sheet(set_cred())
 
     cell = data_sheet.find(user_name)
-    next_row = next_available_row(data_sheet)
-    uname_col = find_column(data_sheet, 'user_name') + 1
-    pwd_col =  find_column(data_sheet, 'password') + 1
+    data_col =  find_column(data_sheet, data_title) + 1
 
     #insert on the next available row
     if cell == None :
+        next_row = next_available_row(data_sheet)
+        uname_col = find_column(data_sheet, 'user_name') + 1
+        
         data_sheet.update_cell(next_row, uname_col, user_name)
-        data_sheet.update_cell(next_row, pwd_col, password)
-        return_value = 'new user: ' + user_name + ' ok.'
+        data_sheet.update_cell(next_row, data_col, data)
+        return_value = f'new user: {user_name} with {data_title} ok.'
     else :
-        data_sheet.update_cell(cell.row, 4, password)
-        return_value = 'update user: ' + user_name + ' ok.'
+        data_sheet.update_cell(cell.row, data_col, data)
+        return_value = f'update user: {user_name} on {data_title} ok.'
 
     return return_value
 

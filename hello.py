@@ -1,7 +1,8 @@
 # Program to make a simple
 # login screen 
  
-from google_db import gsheet_find
+from google_db import gsheet_find, gsheet_update
+from werkzeug import get_machine_id
 from encryptor import *
 import tkinter as tk
 import tkinter.font as tkFont
@@ -19,7 +20,7 @@ def submit(name_var,passw_var):
     
     name = name_var.get()
     password = passw_var.get()
-    
+
     db_pwd = gsheet_find(name,'password')
 
     if db_pwd == None:
@@ -27,6 +28,16 @@ def submit(name_var,passw_var):
         tkinter.messagebox.showinfo("Alert Message", "帳號或密碼錯誤,剩餘"+str(tries)+"次機會，將鎖定帳號")
     else:
         if encomp(password, db_pwd):
+
+            # check or update uuid
+            local_uuid = get_machine_id().decode()
+            db_uuid = gsheet_find(name,'uuid')
+            if db_uuid == None:
+                gsheet_update(name, 'uuid', local_uuid)
+            elif db_uuid != local_uuid:
+                tkinter.messagebox.showinfo("Alert Message", "帳號不允許在此設備上運作，請找管理員!")
+                exit()
+
             tkinter.messagebox.showinfo("Alert Message", "登入成功!")
             name_var.set("")
             passw_var.set("")
